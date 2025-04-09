@@ -16,8 +16,8 @@ const Dashboard = () => {
   const fetchUsers = async () => {
     try {
       const response = await databases.listDocuments(
-        import.meta.env.VITE_APPWRITE_DATABASE_ID, // Database ID
-        import.meta.env.VITE_APPWRITE_COLLECTION_ID  // Collection ID
+        import.meta.env.VITE_APPWRITE_COLLECTION_ID,  // Collection ID
+        import.meta.env.VITE_APPWRITE_DATABASE_ID // Database ID
       );  // Fetch all user documents
       setUsers(response.documents);  // Set users in state
     } catch (error) {
