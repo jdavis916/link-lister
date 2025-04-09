@@ -15,8 +15,8 @@ const Home = () => {
   const fetchUsers = async () => {
     try {
       const response = await databases.listDocuments(
-        '6718cbed0034eb877fc0', // Collection ID
-        '6718cc030007b5b40502' // Database ID
+        import.meta.env.VITE_APPWRITE_COLLECTION_ID, // Collection ID
+        import.meta.env.VITE_APPWRITE_DATABASE_ID // Database ID
       );
       setUsers(response.documents);
     } catch (error) {
@@ -37,7 +37,10 @@ const Home = () => {
         
         {users.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {users.map((user) => (
+            {users
+              .slice() // optional: avoids mutating original state
+              .sort((a, b) => a.name.localeCompare(b.name)) // sort alphabetically by name
+              .map((user) => (
               <div key={user.$id} className="bg-white shadow-lg rounded-lg p-6">
                 <h2 className="text-xl font-semibold mb-2">{user.name}</h2>
                 <p className="text-gray-600 mb-4">{user.email}</p>
