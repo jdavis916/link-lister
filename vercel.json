@@ -1,0 +1,10 @@
+{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "link-lister.vercel.app" }],
+      "destination": "https://datboywillmastermind.shinyredrobot.com/:1",
+      "permanent": true
+    }
+  ]
+}
