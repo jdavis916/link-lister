@@ -13,10 +13,12 @@ const Home = () => {
   }, []);
 
   const fetchUsers = async () => {
+    const dbId = import.meta.env.VITE_APPWRITE_DATABASE_ID;
+    const collectionId = import.meta.env.VITE_APPWRITE_COLLECTION_ID;
     try {
       const response = await databases.listDocuments(
-        import.meta.env.VITE_APPWRITE_DATABASE_ID, // Database ID
-        import.meta.env.VITE_APPWRITE_COLLECTION_ID // Collection ID
+        dbId, // Database ID
+        collectionId // Collection ID
       );
       setUsers(response.documents);
     } catch (error) {
