@@ -10,7 +10,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      await account.createSession(email, password);  // Create a session for the admin
+      await account.createEmailPasswordSession(email, password);  // Create a session for the admin
       window.location.href = "/dashboard";  // Redirect to dashboard after login
     } catch (err) {
       console.error(err);
