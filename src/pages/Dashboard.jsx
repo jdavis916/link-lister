@@ -1,4 +1,4 @@
-// src/pages/Dashboard.jsx
+
 import { useEffect, useState } from 'react';
 import { account } from '../lib/appwrite';  // Import the account object from appwrite.js
 import { client } from '../lib/appwrite';   // Import the existing client from appwrite.js
@@ -8,7 +8,8 @@ const databases = new Databases(client);    // Initialize the Databases service
 
 const Dashboard = () => {
   const [users, setUsers] = useState([]);
-
+  const [fetchError, setFetchError] = useState(null); // Added fetchError state
+  
   useEffect(() => {
     fetchUsers();
   }, []);
@@ -16,6 +17,18 @@ const Dashboard = () => {
   const fetchUsers = async () => {
     const dbId = import.meta.env.VITE_APPWRITE_DATABASE_ID;
     const collectionId = import.meta.env.VITE_APPWRITE_COLLECTION_ID;
+    
+    console.log(`Dashboard: VITE_APPWRITE_DATABASE_ID = ${dbId}`);
+    console.log(`Dashboard: VITE_APPWRITE_COLLECTION_ID = ${collectionId}`);
+
+    if (!dbId) {
+      console.warn('Warning: VITE_APPWRITE_DATABASE_ID is not set in your environment. User data fetching will likely fail.');
+    }
+    if (!collectionId) {
+      console.warn('Warning: VITE_APPWRITE_COLLECTION_ID is not set in your environment. User data fetching will likely fail.');
+    }
+    
+   
     try {
       const response = await databases.listDocuments(
         dbId, // Database ID
@@ -23,7 +36,8 @@ const Dashboard = () => {
       );  // Fetch all user documents
       setUsers(response.documents);  // Set users in state
     } catch (error) {
-      console.error('Error fetching users:', error);
+      console.error('Error fetching users:', error); // Kept existing console error
+      setFetchError('Failed to fetch users. Please check console for details or contact support.'); // Set fetchError state
     }
   };
 
@@ -48,6 +62,9 @@ const Dashboard = () => {
         </button>
 
         <h3 className="text-2xl font-semibold text-gray-800 mb-6">Users List</h3>
+        
+        {/* Conditional rendering for fetchError */}
+        {fetchError && <p className="text-red-600 text-center mb-4">{fetchError}</p>}
         
         {/* Display users in a column */}
         <div className="space-y-4">
