@@ -22,10 +22,12 @@ const EditUser = () => {
   useEffect(() => {
 
     const fetchUser = async () => {
+      const dbId = import.meta.env.VITE_APPWRITE_DATABASE_ID;
+      const collectionId = import.meta.env.VITE_APPWRITE_COLLECTION_ID;
       try {
         const response = await databases.getDocument(
-          import.meta.env.VITE_APPWRITE_DATABASE_ID, // Database ID
-          import.meta.env.VITE_APPWRITE_COLLECTION_ID, // Collection ID
+          dbId, // Database ID
+          collectionId, // Collection ID
           userId
         );  // Fetch user document by ID
         setFormData(response);  // Pre-fill the form with user data
