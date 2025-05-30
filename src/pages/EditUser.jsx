@@ -24,8 +24,8 @@ const EditUser = () => {
     const fetchUser = async () => {
       try {
         const response = await databases.getDocument(
-          import.meta.env.VITE_APPWRITE_COLLECTION_ID, // Collection ID
           import.meta.env.VITE_APPWRITE_DATABASE_ID, // Database ID
+          import.meta.env.VITE_APPWRITE_COLLECTION_ID, // Collection ID
           userId
         );  // Fetch user document by ID
         setFormData(response);  // Pre-fill the form with user data
@@ -49,8 +49,8 @@ const EditUser = () => {
     try {
       // Update user document in the "Users" collection
       await databases.updateDocument(
-        '6718cc030007b5b40502',
-        '6718cbed0034eb877fc0', 
+        import.meta.env.VITE_APPWRITE_DATABASE_ID, // Database ID
+        import.meta.env.VITE_APPWRITE_COLLECTION_ID, // Collection ID
         userId, 
         formData
       );

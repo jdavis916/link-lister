@@ -12,8 +12,9 @@ const Login = () => {
     try {
       await account.createSession(email, password);  // Create a session for the admin
       window.location.href = "/dashboard";  // Redirect to dashboard after login
-    } catch (error) {
-      setError('Login failed. Please check your credentials. : ', error);
+    } catch (err) {
+      console.error(err);
+      setError(`Login failed. Please check your credentials. (${err.message})`);
     }
   };
 
